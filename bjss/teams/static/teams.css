@@ -1,0 +1,41 @@
+/* static/css/style.css */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #ffe4b5; /* softer Navajo White */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #333; /* Darker text color for readability */
+}
+
+table {
+    width: 80%; /* Centered table with some padding on sides */
+    max-width: 900px; /* Limit max width for readability */
+    margin: 20px;
+    border-collapse: collapse;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px; /* Increased padding for a cleaner look */
+    text-align: left;
+    font-size: 16px; /* Slightly larger text */
+}
+
+th {
+    background-color: #e0e0e0; /* Slightly darker header for contrast */
+    font-weight: bold;
+    color: #333;
+}
+
+tr:nth-child(even) {
+    background-color: #fafafa; /* Softer shade for alternating rows */
+}
+
+tr:hover {
+    background-color: #f1f1f1; /* Highlight row on hover for interactivity */
+}

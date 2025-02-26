@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teams List</title>
+    <link rel="stylesheet" href="{% static '/teams.css' %}"> <!-- Optional CSS -->
+</head>
+<body>
+    <h1>Teams List</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Project</th>
+                <th>Required Skills</th>
+                <th>Location</th>
+                <th>Type of Work</th>
+                <th>Start Date</th>
+                <th>Security Clearance</th>
+                <th>Team Size</th>
+                <th>Experience (Years)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for team in teams %}
+                <tr>
+                    <td><a href="{% url 'chosen_team' team.project %}">{{ team.project }}</a></td>
+                    <td>{{ team.required_skills }}</td>
+                    <td>{{ team.location }}</td>
+                    <td>{{ team.type_of_work|yesno:"True,False" }}</td>
+                    <td>{{ team.start_date }}</td>
+                    <td>{{ team.security_clearance|yesno:"True,False" }}</td>
+                    <td>{{ team.team_size }}</td>
+                    <td>{{ team.experience }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="8">No teams available.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

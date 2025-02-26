@@ -1,0 +1,157 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chosen Team</title>
+    <link rel="stylesheet" href="{% static '/chosen.css' %}"> <!-- Optional CSS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    function fetchTeamData(url, tableBodyId) {
+        console.log("Fetching data from:", url);  // Log URL
+        $.get(url, function(response) {
+            console.log("Data received:", response);  // Log received data
+
+            // Clear the existing table body
+            $('#' + tableBodyId).empty();
+
+            const employees = response.employees || response;  // Adjust for different responses
+            const latestAvailability = response.latest_availability || "N/A";  // Extract latest availability
+
+            if (employees.length > 0) {
+                // Populate the table with new data
+                $.each(employees, function(index, employee) {
+                    console.log("Adding employee:", employee);  // Log each employee
+                    $('#' + tableBodyId).append(`
+                        <tr>
+                            <td>${employee.name}</td>
+                            <td>${employee.email}</td>
+                            <td>${employee.skills}</td>
+                            <td>${employee.experience}</td>
+                            <td>${employee.location}</td>
+                            <td>${employee.type_of_work}</td>
+                            <td>${employee.availability}</td>
+                            <td>${employee.security_clearance}</td>
+                            <td>${employee.temperament}</td>
+                        </tr>
+                    `);
+                });
+            } else {
+                $('#' + tableBodyId).append('<tr><td colspan="9">No employees found.</td></tr>');
+            }
+
+            // Display the latest availability at the bottom of the page
+            $('#latestAvailabilityDisplay').text(latestAvailability);
+        });
+    }
+
+    function fetchAdvice(url) {
+        $.post(url, function(response) {
+            $('#adviceDisplay').text(response.answer);  // Access the answer string
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            console.error("Error fetching advice: ", textStatus, errorThrown);
+            $('#adviceDisplay').text("Failed to get advice.");  // Handle the error
+        });
+    }
+
+    $(document).ready(function() {
+        $('#idealTeamButton').click(function(event) {
+            event.preventDefault();
+            const url = $(this).data('url');
+            fetchTeamData(url, 'participantsTableBody');
+        });
+
+        $('#actualTeamButton').click(function(event) {
+            event.preventDefault();
+            const url = $(this).data('url');
+            fetchTeamData(url, 'participantsTableBody');
+        });
+
+        $('#adviceButton').click(function(event) {
+            event.preventDefault();
+            const url = $(this).data('url');
+            fetchAdvice(url);
+        });
+
+        $('#preferredTeamButton').click(function(event) {
+            event.preventDefault();
+            const duration = $('#duration').val();
+            const unit = $('#unit').val();
+
+            // Check if the required fields are filled
+            if (!duration || !unit) {
+                alert("Please fill all required fields.");
+                return;
+            }
+
+            const url = $(this).data('url') + `?duration=${duration}&unit=${unit}`;
+            fetchTeamData(url, 'participantsTableBody');
+        });
+    });
+</script>
+
+</head>
+<body>
+    <h1>Project: {{ project.project }}</h1>
+    <p>Required Skills: {{ project.required_skills }}</p>
+    <p>Location: {{ project.location }}</p>
+    <p>Type of Work: {{ project.type_of_work|yesno:"True,False" }}</p>
+    <p>Start Date: {{ project.start_date }}</p>
+    <p>Security Clearance: {{ project.security_clearance|yesno:"True,False" }}</p>
+    <p>Team Size: {{ project.team_size }}</p>
+    <p>Experience: {{ project.experience }}</p>
+
+    <button id="idealTeamButton" data-url="{% url 'get_ideal_team' project.project %}">Get Ideal Team</button>
+    <button id="actualTeamButton" data-url="{% url 'get_actual_team' project.project %}">Get Actual Team</button>
+    <button id="adviceButton" data-url="{% url 'ask_chatgpt' project.project %}">AI advice</button>
+
+    <div>
+        <h3>Get Preferred Team</h3>
+        <input type="text" id="duration" placeholder="Duration (e.g., 30)" required>
+        <input type="text" id="unit" placeholder="Unit (days/months)" required>
+        <button id="preferredTeamButton" data-url="{% url 'get_preferred_team' project.project %}">Get Preferred Team</button>
+    </div>
+
+    <div id="adviceDisplay" style="margin-top: 20px; font-weight: bold;"></div>
+
+    <table id="participantsTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Skills</th>
+                <th>Experience</th>
+                <th>Location</th>
+                <th>Type of Work</th>
+                <th>Availability</th>
+                <th>Security Clearance</th>
+                <th>Temperament</th>
+            </tr>
+        </thead>
+        <tbody id="participantsTableBody">
+            {% for employee in Employees %}
+            <tr>
+                <td>{{ employee.name }}</td>
+                <td>{{ employee.email }}</td>
+                <td>{{ employee.skills }}</td>
+                <td>{{ employee.experience }}</td>
+                <td>{{ employee.location }}</td>
+                <td>{{ employee.type_of_work }}</td>
+                <td>{{ employee.availability }}</td>
+                <td>{{ employee.security_clearance }}</td>
+                <td>{{ employee.temperament }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="9">No employees found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div id="latestAvailabilityDisplay" style="margin-top: 20px; font-weight: bold;">
+        Latest Availability: N/A
+    </div>
+</body>
+</html>

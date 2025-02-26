@@ -1,0 +1,43 @@
+
+body {
+    background-color: #ffe4b5;
+    color: #333;
+}
+
+/* Headings */
+h1, h3 {
+    color: #8b4513;
+}
+
+/* Paragraphs */
+p {
+    color: #6b4f3a;
+}
+
+/* Button styles */
+button {
+    background-color: #d2b48c;
+    color: white;
+}
+
+button:hover {
+    background-color: #c8b09b;
+}
+
+/* Table styles */
+th {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+#adviceDisplay {
+    color: #8b0000;
+}

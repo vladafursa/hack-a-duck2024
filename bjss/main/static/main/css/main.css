@@ -1,0 +1,67 @@
+/* main.css */
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color:navajowhite;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    background-color: #ffffff; /* White background for the form */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 90%; /* Set width to 90% for smaller screens */
+    max-width: 350px; /* Maximum width */
+    text-align: center;
+    box-sizing: border-box; /* Include padding in width calculations */
+}
+
+h2 {
+    color: #4a4a4a; /* Dark gray for the heading */
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #7a7a7a; /* Medium gray for labels */
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #d1c6b9; /* Light beige border */
+    border-radius: 6px;
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border-color: #bda19a; /* Slightly darker beige for focus */
+    outline: none;
+    box-shadow: 0 0 5px rgba(189, 161, 154, 0.3);
+}
+button {
+    background-color:#bda19a;
+    border: none; color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 8px;
+} button:hover { background-color: #bda19c; }

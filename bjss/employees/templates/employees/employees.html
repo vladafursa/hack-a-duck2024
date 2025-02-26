@@ -1,0 +1,163 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Employees</title>
+    <link rel="stylesheet" href="{% static 'employees/employees.css' %}">
+
+</head>
+<body>
+<h1>Employees</h1>
+<form method="GET" action="{% url 'filtered-employees-list' %}" onsubmit="setSkills()">
+    <div class="multi-select-container">
+    <div class="selected-items" onclick="toggleDropdown()">Select Skills</div>
+    <div class="options">
+        <div class="option-item" onclick="selectOption(this)">C++</div>
+        <div class="option-item" onclick="selectOption(this)">Java</div>
+        <div class="option-item" onclick="selectOption(this)">JavaScript</div>
+        <div class="option-item" onclick="selectOption(this)">Python</div>
+        <div class="option-item" onclick="selectOption(this)">Cloud Computing</div>
+        <div class="option-item" onclick="selectOption(this)">Project Management</div>
+        <div class="option-item" onclick="selectOption(this)">UI</div>
+        <div class="option-item" onclick="selectOption(this)">Machine Learning</div>
+        <div class="option-item" onclick="selectOption(this)">Data Analysis</div>
+        <div class="option-item" onclick="selectOption(this)">SQL</div>
+        <div class="option-item" onclick="selectOption(this)">C#</div>
+        <div class="option-item" onclick="selectOption(this)">Web Development</div>
+        <div class="option-item" onclick="selectOption(this)">HTML</div>
+        <div class="option-item" onclick="selectOption(this)">CSS</div>
+        <div class="option-item" onclick="selectOption(this)">.NET</div>
+    </div>
+</div>
+
+    <div class="experience-container">
+        <label for="experience">Experience (years):</label>
+        <input type="number" id="experience" name="experience" min="0" placeholder="Enter years" required>
+    </div>
+
+    <div class="filter-item">
+        <label for="availability">Available Since:</label>
+        <input type="date" id="availability" name="availability" required>
+    </div>
+
+    <div class="filter-item">
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location" placeholder="Enter location" required>
+    </div>
+
+    <div class="filter-item">
+        <label for="temperament">Temperament:</label><br>
+        <input type="radio" id="melancholic" name="temperament" value="melancholic" required>
+        <label for="melancholic">Melancholic</label><br>
+        <input type="radio" id="choleric" name="temperament" value="choleric" required>
+        <label for="choleric">Choleric</label><br>
+        <input type="radio" id="sanguine" name="temperament" value="sanguine" required>
+        <label for="sanguine">Sanguine</label><br>
+        <input type="radio" id="phlegmatic" name="temperament" value="phlegmatic" required>
+        <label for="phlegmatic">Phlegmatic</label><br>
+    </div>
+
+    <div class="filter-item">
+    <label for="security_clearance">Security Clearance:</label>
+    <input type="checkbox" id="security_clearance" name="security_clearance" value="true" onchange="setSecurityClearance()">
+    <input type="hidden" id="security_clearance_value" name="security_clearance" value="false">
+</div>
+
+    <div class="filter-item">
+        <label for="type_of_work">Type of Work:</label>
+        <input type="checkbox" id="type_of_work" name="type_of_work" value="true" onchange="setTypeOfWork()">
+        <input type="hidden" id="type_of_work_value" name="type_of_work" value="false">
+    </div>
+
+    <input type="hidden" id="skills" name="skills">
+    <div class="filter-item">
+        <input type="submit" value="Filter">
+         <a href="http://127.0.0.1:8000/employees/" class="reset-button">Show All Employees</a>
+    </div>
+</form>
+
+<table id="participantsTable">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Skills</th>
+        <th>Experience</th>
+        <th>Location</th>
+        <th>Type of Work</th>
+        <th>Availability</th>
+        <th>Security Clearance</th>
+        <th>Temperament</th>
+
+    </tr>
+    </thead>
+    <tbody id="participantsTableBody">
+    {% for employee in Employees %}
+    <tr>
+        <td>{{ employee.name }}</td>
+        <td>{{ employee.email }}</td>
+        <td>{{ employee.skills }}</td>
+        <td>{{ employee.experience }}</td>
+        <td>{{ employee.location }}</td>
+        <td>{{ employee.type_of_work }}</td>
+        <td>{{ employee.availability }}</td>
+        <td>{{ employee.security_clearance }}</td>
+        <td>{{ employee.temperament }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="10">No employees found.</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<script>
+    function toggleDropdown() {
+    const options = document.querySelector('.options');
+    options.style.display = options.style.display === 'block' ? 'none' : 'block';
+}
+
+function selectOption(optionElement) {
+    optionElement.classList.toggle('selected');
+
+    const selectedItems = Array.from(document.querySelectorAll('.option-item.selected'))
+        .map(item => item.textContent)
+        .join(', ');
+
+    document.querySelector('.selected-items').textContent = selectedItems || 'Select Skills';
+}
+
+
+
+    function setSkills() {
+        const selectedSkills = Array.from(document.querySelectorAll('.option-item.selected'))
+            .map(item => item.textContent)
+            .join(',');
+
+        document.getElementById('skills').value = selectedSkills;
+    }
+
+    function setTypeOfWork() {
+        const typeOfWorkCheckbox = document.getElementById('type_of_work');
+        document.getElementById('type_of_work_value').value = typeOfWorkCheckbox.checked ? "true" : "false";
+    }
+    function setSecurityClearance() {
+    const securityClearanceCheckbox = document.getElementById('security_clearance');
+    const hiddenInput = document.getElementById('security_clearance_value');
+
+    // Set the hidden input value based on the checkbox state
+    hiddenInput.value = securityClearanceCheckbox.checked ? "true" : "false";
+}
+    document.addEventListener('click', function(event) {
+        const container = document.querySelector('.multi-select-container');
+        if (!container.contains(event.target)) {
+            document.querySelector('.options').style.display = 'none';
+        }
+    });
+</script>
+</body>
+</html>
