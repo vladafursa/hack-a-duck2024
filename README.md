@@ -7,4 +7,20 @@ Login credentials for HR are as follows:
 username: admin  
 password: P@ssw0rd1!  
 
-*ask AI function does not work, because Open API key is not allowed to be pushed to Git*
+Login page:
+<img width="1427" height="810" alt="Screenshot 2026-01-12 at 20 19 11" src="https://github.com/user-attachments/assets/19390fe7-9394-4a4b-8f78-c6ac83a0976b" />
+
+
+Activities page:
+<img width="1418" height="791" alt="Screenshot 2026-01-12 at 20 19 47" src="https://github.com/user-attachments/assets/d3bc4636-456d-4e97-af0a-115d7317f534" />
+
+
+Filter page:
+<img width="1431" height="809" alt="Screenshot 2026-01-12 at 20 44 39" src="https://github.com/user-attachments/assets/4805a4c7-3fb8-4959-8ff7-30ef12d7625c" />
+
+Projects page:
+<img width="1315" height="654" alt="Screenshot 2026-01-12 at 20 45 05" src="https://github.com/user-attachments/assets/04261765-482f-43a6-83df-06125070f020" />
+
+Chosen project page:
+<img width="1224" height="516" alt="Screenshot 2026-01-12 at 20 46 30" src="https://github.com/user-attachments/assets/e9df3d9c-d92c-4bc5-a9a3-ad14a35acaa3" />
+
